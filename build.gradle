@@ -1,0 +1,49 @@
+plugins {
+    id "scala"
+
+    id "java-library"
+
+    id "com.diffplug.spotless" version "6.6.1"
+}
+
+spotless {
+    java {
+        googleJavaFormat("1.15.0").aosp()
+
+        importOrder("io.github.loustler", "", "java", "javax", "scala", "\\#")
+        removeUnusedImports()
+    }
+
+    scala {
+        scalafmt("3.5.2")
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://packages.confluent.io/maven"
+        }
+    }
+}
+
+subprojects {
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(8)
+        }
+    }
+
+    jar {
+        manifest {
+            attributes "Built-By": System.getProperty("user.name"),
+                    "Build-Jdk": System.getProperty("java.version")
+        }
+    }
+
+    compileJava.options.encoding = "UTF-8"
+    compileTestJava.options.encoding = "UTF-8"
+    compileScala.options.encoding = "UTF-8"
+    compileTestScala.options.encoding = "UTF-8"
+}

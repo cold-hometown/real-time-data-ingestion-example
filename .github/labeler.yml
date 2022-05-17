@@ -1,0 +1,12 @@
+configuration:
+  - .github/**/*
+  - .gitignore
+  - "*.yml"
+
+enhancement:
+  - "**/*.scala"
+  - "**/*.java"
+
+documentation:
+  - "*.md"
+  - "**/*.md"
